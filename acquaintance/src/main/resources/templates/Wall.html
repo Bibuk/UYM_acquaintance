@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт Знакомств</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #fff;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .user-greeting {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .task-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .task-form input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 60%;
+            margin-right: 10px;
+        }
+        .task-form button {
+            padding: 10px 20px;
+            background-color: #ff6b6b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .task-form button:hover {
+            background-color: #e64a4a;
+        }
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-list li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .write-message {
+            padding: 8px 16px;
+            background-color: #ff6b6b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .write-message:hover {
+            background-color: #e64a4a;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Сайт Знакомств</h1>
+</header>
+
+<div class="user-greeting">
+    <p>Hello, <span th:text="${#authentication.name}">User Name</span>!</p>
+</div>
+
+<div class="task-form">
+    <form action="api/v1/addTask" method="post">
+        <input type="text" name="text" placeholder="Enter text" />
+        <button type="submit">Add</button>
+    </form>
+</div>
+
+<div th:each="task : ${tasks}">
+    <div class="task-list">
+        <div>
+            <span th:text="${task.id}"></span>
+            <span th:text="${task.text}"></span>
+            <form action="api/v1/deleteTask" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${task.id}" />
+                <button type="submit">Delete</button>
+            </form>
+            <button class="write-message" type="button">Write</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
